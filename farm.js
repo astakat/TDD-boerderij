@@ -35,9 +35,16 @@ const getCostsForCrop = function (item) {
 
 const getRevenueForCrop = function (item) {
   // console.log(item);
-  const totalYield = item.crop.yield * item.numCrops;
+  let totalYield = item.crop.yield * item.numCrops;
   return totalYield * item.salePrice;
 };
+
+const getProfitForCrop = function (item){
+  totalYield = item.crop.yield * item.numCrops;
+  let totalRevenue = totalYield * item.salePrice;
+  let totalCosts = item.crop.costs * item.numCrops;
+  return totalRevenue - totalCosts;
+}
 
 module.exports = {
   getYieldForPlant,
@@ -45,4 +52,5 @@ module.exports = {
   getTotalYield,
   getCostsForCrop,
   getRevenueForCrop,
+  getProfitForCrop,
 };
