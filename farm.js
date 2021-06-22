@@ -4,6 +4,7 @@ const getYieldForPlant = function (item, factor) {
     return item.yield;
   }
   let sun;
+  let wind;
   if (item.factors.sun) {
     switch (factor.sun) {
       case "low":
@@ -15,11 +16,31 @@ const getYieldForPlant = function (item, factor) {
       case "high":
         sun = (100 + item.factors.sun.high) / 100;
         break;
+      default:
+        sun = 1;
     }
   } else {
     sun = 1;
   }
-  return item.yield * sun;
+  if (item.factors.wind) {
+    switch (factor.wind) {
+      case "low":
+        wind = (100 + item.factors.wind.low) / 100;
+        break;
+      case "medium":
+        wind = (100 + item.factors.wind.medium) / 100;
+        break;
+      case "high":
+        wind = (100 + item.factors.wind.high) / 100;
+        break;
+      default:
+        wind = 1;
+    }
+  } else {
+    wind = 1;
+  }
+  console.log(sun, wind);
+  return item.yield * sun * wind;
 };
 
 const getYieldForCrop = function (item) {
