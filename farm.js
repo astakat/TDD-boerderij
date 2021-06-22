@@ -1,10 +1,12 @@
 const getYieldForPlant = function (item, factor) {
-  console.log(item.factors.sun.high);
+  // console.log("item en factor", item, factor);
+  // console.log("factor regist", factor);
   if (!factor) {
     return item.yield;
   }
   let sun;
   let wind;
+  let soil;
   if (item.factors.sun) {
     switch (factor.sun) {
       case "low":
@@ -39,8 +41,28 @@ const getYieldForPlant = function (item, factor) {
   } else {
     wind = 1;
   }
-  console.log(sun, wind);
-  return item.yield * sun * wind;
+  if (item.factors.soil) {
+    switch (factor.soil) {
+      case "sand":
+        soil = (100 + item.factors.soil.sand) / 100;
+        break;
+      case "clay":
+        soil = (100 + item.factors.soil.clay) / 100;
+        break;
+      case "silt":
+        soil = (100 + item.factors.soil.silt) / 100;
+        break;
+      default:
+        soil = 1;
+    }
+  } else {
+    soil = 1;
+  }
+  console.log("sun, wind, soil", sun, wind, soil);
+  const resultYieldForPlant = item.yield * sun * wind * soil;
+  console.log("result yield for plant",resultYieldForPlant);
+  const result = Number(resultYieldForPlant).toFixed(2);
+  return result;
 };
 
 const getYieldForCrop = function (item) {
