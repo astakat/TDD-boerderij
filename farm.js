@@ -60,8 +60,8 @@ const getYieldForPlant = function (item, factor) {
   }
   console.log("sun, wind, soil", sun, wind, soil);
   const resultYieldForPlant = item.yield * sun * wind * soil;
-  console.log("result yield for plant",resultYieldForPlant);
-  const result = Number(resultYieldForPlant).toFixed(2);
+  console.log("result yield for plant", resultYieldForPlant);
+  const result = parseFloat(resultYieldForPlant.toFixed(2));
   return result;
 };
 
