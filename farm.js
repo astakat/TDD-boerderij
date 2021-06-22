@@ -1,4 +1,26 @@
-const getYieldForPlant = (item) => item.yield;
+const getYieldForPlant = function (item, factor) {
+  console.log(item.factors.sun.high);
+  if (!factor) {
+    return item.yield;
+  }
+  let sun;
+  if (item.factors.sun) {
+    switch (factor.sun) {
+      case "low":
+        sun = (100 + item.factors.sun.low) / 100;
+        break;
+      case "medium":
+        sun = (100 + item.factors.sun.medium) / 100;
+        break;
+      case "high":
+        sun = (100 + item.factors.sun.high) / 100;
+        break;
+    }
+  } else {
+    sun = 1;
+  }
+  return item.yield * sun;
+};
 
 const getYieldForCrop = function (item) {
   //   console.log(typeof item);
