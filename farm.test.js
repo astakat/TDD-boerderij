@@ -35,6 +35,46 @@ const pumpkin = {
   name: "pumpkin",
   yield: 4,
   costs: 2,
+  factors: {
+    sun: {
+      low: -20,
+      medium: 10,
+      high: 40,
+    },
+    wind: {
+      low: 10,
+      medium: 0,
+      high: -5,
+    },
+    soil: {
+      sand: 30,
+      clay: -10,
+      silt: -20,
+    },
+  },
+};
+
+const cale = {
+  name: "cale",
+  yield: 5,
+  costs: 3,
+  factors: {
+    sun: {
+      low: 0,
+      medium: 5,
+      high: 10,
+    },
+    wind: {
+      low: 0,
+      medium: 0,
+      high: -5,
+    },
+    soil: {
+      sand: 40,
+      clay: 0,
+      silt: -25,
+    },
+  },
 };
 
 describe("getYieldForPlant", () => {
@@ -77,6 +117,18 @@ describe("getYieldForCrop", () => {
       soil: "silt",
     };
     expect(getYieldForCrop(input, environmentFactors)).toBe(168.9);
+  })
+  test("Get yield for crop cale incl environment fac ", () => {
+    const input = {
+      crop: cale,
+      numCrops: 20,
+    };
+    const environmentFactors = {
+      sun: "medium",
+      soil: "silt",
+      wind: "high",
+    };
+    expect(getYieldForCrop(input, environmentFactors)).toBe(374);
   })
 });
 
