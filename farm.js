@@ -58,9 +58,9 @@ const getYieldForPlant = function (item, factor) {
   } else {
     soil = 1;
   }
-  console.log("sun, wind, soil", sun, wind, soil);
+  // console.log("sun, wind, soil", sun, wind, soil);
   const yieldForPlant = item.yield * sun * wind * soil;
-  console.log("result yield for plant", yieldForPlant);
+  // console.log("result yield for plant", yieldForPlant);
   const resultYieldForPlant = parseFloat(yieldForPlant.toFixed(2));
   return resultYieldForPlant;
 };
@@ -70,23 +70,18 @@ const getYieldForCrop = function (item, factor) {
   if (!factor) {
     return yieldForCrop;
   }
-    // console.log(typeof item);
-    // console.log(Object.entries(item));
+  // console.log(typeof item);
+  // console.log(Object.entries(item));
   return yieldForCrop * getYieldForPlant(item.crop, factor);
 };
 
-const getTotalYield = function (item) {
-  //   console.log(Object.entries(item));
-  //   console.log(item.crops[0].crop.yield);
-  const resultYieldArray = item.crops.map((element) => {
-    // console.log(element);
-    // console.log(element.numCrops);
-    return element.crop.yield * element.numCrops;
-  });
-  //   console.log(resultArray);
-  return resultYieldArray.reduce(
+const getTotalYield = function (item, factor) {
+  const resultYieldArray = item.crops.map((element) => getYieldForCrop(element, factor));
+  console.log("resulting Yield Array:", resultYieldArray);
+  const reducedYieldArray = resultYieldArray.reduce(
     (accumulator, currentValue) => accumulator + currentValue
   );
+  return parseFloat(reducedYieldArray.toFixed(2));
 };
 
 const getCostsForCrop = function (item) {

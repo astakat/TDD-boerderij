@@ -117,7 +117,7 @@ describe("getYieldForCrop", () => {
       soil: "silt",
     };
     expect(getYieldForCrop(input, environmentFactors)).toBe(168.9);
-  })
+  });
   test("Get yield for crop cale incl environment fac ", () => {
     const input = {
       crop: cale,
@@ -129,7 +129,7 @@ describe("getYieldForCrop", () => {
       wind: "high",
     };
     expect(getYieldForCrop(input, environmentFactors)).toBe(374);
-  })
+  });
 });
 
 describe("getTotalYield", () => {
@@ -145,6 +145,18 @@ describe("getTotalYield", () => {
     const crops = [{ crop: corn, numCrops: 0 }];
     expect(getTotalYield({ crops })).toBe(0);
   });
+
+  test("Calculate total yield with multiple crops with environment fac", () => {
+    const crops = [
+      { crop: corn, numCrops: 5 },
+      { crop: cale, numCrops: 13 },
+    ];
+    const environmentFactors = {
+      sun: "high",
+      soil: "silt",
+    };
+    expect(getTotalYield({ crops }, environmentFactors)).toBe(352.9);
+  }); 
 });
 
 describe("getCostsForCrop", () => {
