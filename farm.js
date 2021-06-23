@@ -59,16 +59,20 @@ const getYieldForPlant = function (item, factor) {
     soil = 1;
   }
   console.log("sun, wind, soil", sun, wind, soil);
-  const resultYieldForPlant = item.yield * sun * wind * soil;
-  console.log("result yield for plant", resultYieldForPlant);
-  const result = parseFloat(resultYieldForPlant.toFixed(2));
-  return result;
+  const yieldForPlant = item.yield * sun * wind * soil;
+  console.log("result yield for plant", yieldForPlant);
+  const resultYieldForPlant = parseFloat(yieldForPlant.toFixed(2));
+  return resultYieldForPlant;
 };
 
-const getYieldForCrop = function (item) {
-  //   console.log(typeof item);
-  //   console.log(Object.entries(item));
-  return item.crop.yield * item.numCrops;
+const getYieldForCrop = function (item, factor) {
+  const yieldForCrop = item.crop.yield * item.numCrops;
+  if (!factor) {
+    return yieldForCrop;
+  }
+    // console.log(typeof item);
+    // console.log(Object.entries(item));
+  return yieldForCrop * getYieldForPlant(item.crop, factor);
 };
 
 const getTotalYield = function (item) {
