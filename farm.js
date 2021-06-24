@@ -77,7 +77,7 @@ const getYieldForCrop = function (item, factor) {
 
 const getTotalYield = function (item, factor) {
   const resultYieldArray = item.crops.map((element) => getYieldForCrop(element, factor));
-  console.log("resulting Yield Array:", resultYieldArray);
+  // console.log("resulting Yield Array:", resultYieldArray);
   const reducedYieldArray = resultYieldArray.reduce(
     (accumulator, currentValue) => accumulator + currentValue
   );
@@ -89,10 +89,17 @@ const getCostsForCrop = function (item) {
   return item.crop.costs * item.numCrops;
 };
 
-const getRevenueForCrop = function (item) {
-  // console.log(item);
+const getRevenueForCrop = function (item, factor) {
+  console.log(item);
   let totalYield = item.crop.yield * item.numCrops;
-  return totalYield * item.salePrice;
+  const revenueCrop = totalYield * item.salePrice;
+  console.log(revenueCrop)
+  if (!factor) {
+    return revenueCrop;
+  }
+  const revWithEnv = revenueCrop * getYieldForPlant(item.crop, factor);
+  console.log(revWithEnv)
+  return revWithEnv
 };
 
 const getProfitForCrop = function (item) {

@@ -156,7 +156,7 @@ describe("getTotalYield", () => {
       soil: "silt",
     };
     expect(getTotalYield({ crops }, environmentFactors)).toBe(352.9);
-  }); 
+  });
 });
 
 describe("getCostsForCrop", () => {
@@ -177,6 +177,18 @@ describe("getRevenueForCrop", () => {
       salePrice: 2,
     };
     expect(getRevenueForCrop(input)).toBe(120);
+  });
+  test("Get revenue for crop with environmentfactors", () => {
+    const input = {
+      crop: cale,
+      numCrops: 12,
+      salePrice: 4,
+    };
+    const environmentFactors = {
+      sun: "high",
+      wind: "high",
+    };
+    expect(getRevenueForCrop(input, environmentFactors)).toBe(250.8);
   });
 });
 
