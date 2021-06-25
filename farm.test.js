@@ -12,6 +12,7 @@ const corn = {
   name: "corn",
   yield: 3,
   costs: 1,
+  salePrice: 2,
   factors: {
     sun: {
       low: -50,
@@ -35,6 +36,7 @@ const pumpkin = {
   name: "pumpkin",
   yield: 4,
   costs: 2,
+  salePrice: 4,
   factors: {
     sun: {
       low: -20,
@@ -58,6 +60,7 @@ const cale = {
   name: "cale",
   yield: 5,
   costs: 3,
+  salePrice: 4,
   factors: {
     sun: {
       low: 0,
@@ -182,13 +185,13 @@ describe("getRevenueForCrop", () => {
     const input = {
       crop: cale,
       numCrops: 12,
-      salePrice: 4,
+      
     };
     const environmentFactors = {
       sun: "high",
       wind: "high",
     };
-    expect(getRevenueForCrop(input, environmentFactors)).toBe(250.8);
+    expect(getRevenueForCrop(input, environmentFactors)).toBe(250.56);
   });
 });
 

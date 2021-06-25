@@ -90,16 +90,11 @@ const getCostsForCrop = function (item) {
 };
 
 const getRevenueForCrop = function (item, factor) {
-  console.log(item);
-  let totalYield = item.crop.yield * item.numCrops;
-  const revenueCrop = totalYield * item.salePrice;
-  console.log(revenueCrop)
-  if (!factor) {
-    return revenueCrop;
-  }
-  const revWithEnv = revenueCrop * getYieldForPlant(item.crop, factor);
-  console.log(revWithEnv)
-  return revWithEnv
+  console.log(item.crop.salePrice);
+  const revenuePlant = item.crop.salePrice * getYieldForPlant(item.crop, factor);
+  console.log(revenuePlant)
+  const revenueCrop = revenuePlant * item.numCrops;
+  return revenueCrop;
 };
 
 const getProfitForCrop = function (item) {
