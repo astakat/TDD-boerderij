@@ -1,5 +1,3 @@
-// yield for 1 plant, with outside factors if provided:
-
 const getYieldForPlant = function (item, factor) {
   // console.log("item en factor", item, factor);
   // console.log("factor regist", factor);
@@ -51,7 +49,6 @@ const getYieldForPlant = function (item, factor) {
   // console.log("sun, wind, soil", sun, wind, soil);
   const yieldForPlant = item.yield * sun * wind * soil;
   // console.log("result yield for plant", yieldForPlant);
-  // const resultYieldForPlant = parseFloat(yieldForPlant.toFixed(2));
   return yieldForPlant;
 };
 
@@ -69,7 +66,6 @@ const getTotalYield = function (item, factor) {
   const reducedYieldArray = resultYieldArray.reduce(
     (accumulator, currentValue) => accumulator + currentValue
   );
-  // return parseFloat(reducedYieldArray.toFixed(2));
   return reducedYieldArray;
 };
 
@@ -95,7 +91,6 @@ const getProfitForCrop = function (item, factor) {
   const totalCosts = item.crop.costs * item.numCrops;
   // console.log(revenueCropProf, totalCosts);
   const profitCrop = revenueCropProf - totalCosts;
-  // return parseFloat(profitCrop.toFixed(2));
   return profitCrop;
 };
 
@@ -105,17 +100,12 @@ const getTotalProfit = function (item, factor) {
   const resultProfitArray = item.crops.map((element) => {
     // console.log(element);
     // console.log("factors", element.crop.factors);
-    // totalYield = element.crop.yield * element.numCrops;
-    // totalRevenue = totalYield * element.crop.salePrice;
-    // totalCosts = element.crop.costs * element.numCrops;
-    // return totalRevenue - totalCosts;
     const revenuePlant =
       getYieldForPlant(element.crop, factor) * element.crop.salePrice;
     const revenueCrop = revenuePlant * element.numCrops;
     const totalCosts = element.crop.costs * element.numCrops;
     const profitCrop = revenueCrop - totalCosts;
     // console.log("revPlant",revenuePlant, "revCrop", revenueCrop, "totCost",totalCosts, "profCrop", profitCrop);
-    // return parseFloat(profitCrop.toFixed(2));
     return profitCrop;
   });
   const res = resultProfitArray.reduce(
