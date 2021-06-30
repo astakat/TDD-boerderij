@@ -96,6 +96,11 @@ const avocado = {
       medium: 0,
       high: -5,
     },
+    soil: {
+      sand: 0,
+      clay: 0,
+      silt: 0,
+    },
   },
 };
 
@@ -138,7 +143,7 @@ describe("getYieldForCrop", () => {
       sun: "high",
       soil: "silt",
     };
-    expect(getYieldForCrop(input, environmentFactors)).toBe(56.25);
+    expect(getYieldForCrop(input, environmentFactors)).toBeCloseTo(56.25, 1);
   });
   test("Get yield for crop cale incl environment fac ", () => {
     const input = {
@@ -150,7 +155,7 @@ describe("getYieldForCrop", () => {
       soil: "silt",
       wind: "high",
     };
-    expect(getYieldForCrop(input, environmentFactors)).toBe(74.81);
+    expect(getYieldForCrop(input, environmentFactors)).toBeCloseTo(74.81, 1);
   });
 });
 
@@ -177,7 +182,7 @@ describe("getTotalYield", () => {
       sun: "high",
       soil: "silt",
     };
-    expect(getTotalYield({ crops }, environmentFactors)).toBe(81,76);
+    expect(getTotalYield({ crops }, environmentFactors)).toBeCloseTo(81.76, 1);
   });
 });
 
@@ -208,7 +213,7 @@ describe("getRevenueForCrop", () => {
       sun: "high",
       wind: "high",
     };
-    expect(getRevenueForCrop(input, environmentFactors)).toBe(62.7);
+    expect(getRevenueForCrop(input, environmentFactors)).toBeCloseTo(250.8, 1);
   });
 });
 
@@ -230,7 +235,7 @@ describe("getProfitForCrop", () => {
       sun: "high",
       wind: "low",
     };
-    expect(getProfitForCrop(input, environmentFactors)).toBe(64);
+    expect(getProfitForCrop(input, environmentFactors)).toBeCloseTo(65.8, 1);
   });
 });
 
@@ -246,13 +251,13 @@ describe("getTotalProfit", () => {
     const crops = [
       { crop: corn, numCrops: 20 },
       { crop: pumpkin, numCrops: 10 },
-      // { crop: avocado, numCrops: 5 },
+      { crop: avocado, numCrops: 5 },
     ];
     const environmentFactors = {
       sun: "medium",
       wind: "low",
       soil: "clay",
     };
-    expect(getTotalProfit({ crops }, environmentFactors)).toBe(302);
+    expect(getTotalProfit({ crops }, environmentFactors)).toBeCloseTo(299.04, 1);
   });
 });

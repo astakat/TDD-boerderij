@@ -21,7 +21,7 @@ const getYieldForPlant = function (item, factor) {
         sun = (100 + item.factors.sun.high) / 100;
         break;
     }
-  }; 
+  }
   if (item.factors.wind) {
     switch (factor.wind) {
       case "low":
@@ -34,7 +34,7 @@ const getYieldForPlant = function (item, factor) {
         wind = (100 + item.factors.wind.high) / 100;
         break;
     }
-  } 
+  }
   if (item.factors.soil) {
     switch (factor.soil) {
       case "sand":
@@ -48,21 +48,17 @@ const getYieldForPlant = function (item, factor) {
         break;
     }
   }
-  console.log("sun, wind, soil", sun, wind, soil);
+  // console.log("sun, wind, soil", sun, wind, soil);
   const yieldForPlant = item.yield * sun * wind * soil;
   // console.log("result yield for plant", yieldForPlant);
-  const resultYieldForPlant = parseFloat(yieldForPlant.toFixed(2));
-  return resultYieldForPlant;
+  // const resultYieldForPlant = parseFloat(yieldForPlant.toFixed(2));
+  return yieldForPlant;
 };
 
 const getYieldForCrop = function (item, factor) {
-  const yieldForCrop = item.crop.yield * item.numCrops;
-  if (!factor) {
-    return yieldForCrop;
-  }
   // console.log(typeof item);
   // console.log(Object.entries(item));
-  return yieldForCrop * getYieldForPlant(item.crop, factor);
+  return item.numCrops * getYieldForPlant(item.crop, factor);
 };
 
 const getTotalYield = function (item, factor) {
@@ -73,7 +69,8 @@ const getTotalYield = function (item, factor) {
   const reducedYieldArray = resultYieldArray.reduce(
     (accumulator, currentValue) => accumulator + currentValue
   );
-  return parseFloat(reducedYieldArray.toFixed(2));
+  // return parseFloat(reducedYieldArray.toFixed(2));
+  return reducedYieldArray;
 };
 
 const getCostsForCrop = function (item) {
@@ -83,40 +80,43 @@ const getCostsForCrop = function (item) {
 
 const getRevenueForCrop = function (item, factor) {
   // console.log(item.crop.salePrice);
+  // console.log(item.crop);
+  // console.log(item.numCrops);
   const revenueCrop =
-    getYieldForPlant(item.crop, factor) * item.crop.salePrice * item.numCrops;
-  // console.log(revenuePlant);
-  return parseFloat(revenueCrop.toFixed(2));
+    item.numCrops * getYieldForPlant(item.crop, factor) * item.crop.salePrice;
+  // console.log(revenueCrop);
+  return revenueCrop;
 };
 
 const getProfitForCrop = function (item, factor) {
   const revenuePlant =
     getYieldForPlant(item.crop, factor) * item.crop.salePrice;
-  const revenueCrop = revenuePlant * item.numCrops;
+  const revenueCropProf = revenuePlant * item.numCrops;
   const totalCosts = item.crop.costs * item.numCrops;
-  console.log(revenueCrop, totalCosts);
-  const profitCrop = revenueCrop - totalCosts;
-  return parseFloat(profitCrop.toFixed(2));
+  // console.log(revenueCropProf, totalCosts);
+  const profitCrop = revenueCropProf - totalCosts;
+  // return parseFloat(profitCrop.toFixed(2));
+  return profitCrop;
 };
 
 const getTotalProfit = function (item) {
   // console.log(Object.entries(item));
-  // console.log(item.crops[0].crop.factors);
-  const resultProfitArray = item.crops.map((element) => {
+  console.log(item.crops);
+  const resultProfitArray = item.crops.map((element, factor) => {
     // console.log(element);
-    // console.log(element.salePrice);
+    console.log("factors", element.crop.factors);
     // totalYield = element.crop.yield * element.numCrops;
     // totalRevenue = totalYield * element.crop.salePrice;
     // totalCosts = element.crop.costs * element.numCrops;
     // return totalRevenue - totalCosts;
     const revenuePlant =
-      getYieldForPlant(element.crop) * element.crop.salePrice;
-    // revenuePlant is no different with or without environment factors... Why?
+      getYieldForPlant(element.crop, factor) * element.crop.salePrice;
     const revenueCrop = revenuePlant * element.numCrops;
     const totalCosts = element.crop.costs * element.numCrops;
     const profitCrop = revenueCrop - totalCosts;
-    // console.log(revenuePlant, revenueCrop, totalCosts, profitCrop);
-    return parseFloat(profitCrop.toFixed(2));
+    console.log("revPlant",revenuePlant, "revCrop", revenueCrop, "totCost",totalCosts, "profCrop", profitCrop);
+    // return parseFloat(profitCrop.toFixed(2));
+    return profitCrop;
   });
   const res = resultProfitArray.reduce(
     (accumulator, currentValue) => accumulator + currentValue
