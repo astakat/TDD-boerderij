@@ -6,9 +6,9 @@ const getYieldForPlant = function (item, factor) {
   if (!factor) {
     return item.yield;
   }
-  let sun;
-  let wind;
-  let soil;
+  let sun = 1;
+  let wind = 1;
+  let soil = 1;
   if (item.factors.sun) {
     switch (factor.sun) {
       case "low":
@@ -20,12 +20,8 @@ const getYieldForPlant = function (item, factor) {
       case "high":
         sun = (100 + item.factors.sun.high) / 100;
         break;
-      default:
-        sun = 1;
     }
-  } else {
-    sun = 1;
-  }
+  }; 
   if (item.factors.wind) {
     switch (factor.wind) {
       case "low":
@@ -37,12 +33,8 @@ const getYieldForPlant = function (item, factor) {
       case "high":
         wind = (100 + item.factors.wind.high) / 100;
         break;
-      default:
-        wind = 1;
     }
-  } else {
-    wind = 1;
-  }
+  } 
   if (item.factors.soil) {
     switch (factor.soil) {
       case "sand":
@@ -54,13 +46,9 @@ const getYieldForPlant = function (item, factor) {
       case "silt":
         soil = (100 + item.factors.soil.silt) / 100;
         break;
-      default:
-        soil = 1;
     }
-  } else {
-    soil = 1;
   }
-  // console.log("sun, wind, soil", sun, wind, soil);
+  console.log("sun, wind, soil", sun, wind, soil);
   const yieldForPlant = item.yield * sun * wind * soil;
   // console.log("result yield for plant", yieldForPlant);
   const resultYieldForPlant = parseFloat(yieldForPlant.toFixed(2));
@@ -106,15 +94,15 @@ const getProfitForCrop = function (item, factor) {
     getYieldForPlant(item.crop, factor) * item.crop.salePrice;
   const revenueCrop = revenuePlant * item.numCrops;
   const totalCosts = item.crop.costs * item.numCrops;
-  // console.log(revenueCrop, totalCosts);
+  console.log(revenueCrop, totalCosts);
   const profitCrop = revenueCrop - totalCosts;
   return parseFloat(profitCrop.toFixed(2));
 };
 
 const getTotalProfit = function (item) {
   // console.log(Object.entries(item));
-  // console.log(item.crops[1].crop.costs);
-  const resultProfitArray = item.crops.map((element, factor) => {
+  // console.log(item.crops[0].crop.factors);
+  const resultProfitArray = item.crops.map((element) => {
     // console.log(element);
     // console.log(element.salePrice);
     // totalYield = element.crop.yield * element.numCrops;
@@ -122,18 +110,18 @@ const getTotalProfit = function (item) {
     // totalCosts = element.crop.costs * element.numCrops;
     // return totalRevenue - totalCosts;
     const revenuePlant =
-      getYieldForPlant(element.crop, factor) * element.crop.salePrice;
+      getYieldForPlant(element.crop) * element.crop.salePrice;
     // revenuePlant is no different with or without environment factors... Why?
     const revenueCrop = revenuePlant * element.numCrops;
     const totalCosts = element.crop.costs * element.numCrops;
     const profitCrop = revenueCrop - totalCosts;
-    console.log(revenuePlant, revenueCrop, totalCosts, profitCrop);
+    // console.log(revenuePlant, revenueCrop, totalCosts, profitCrop);
     return parseFloat(profitCrop.toFixed(2));
   });
   const res = resultProfitArray.reduce(
     (accumulator, currentValue) => accumulator + currentValue
   );
-  console.log(res);
+  // console.log(res);
   return res;
 };
 
