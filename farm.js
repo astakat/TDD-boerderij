@@ -99,12 +99,12 @@ const getProfitForCrop = function (item, factor) {
   return profitCrop;
 };
 
-const getTotalProfit = function (item) {
+const getTotalProfit = function (item, factor) {
   // console.log(Object.entries(item));
-  console.log(item.crops);
-  const resultProfitArray = item.crops.map((element, factor) => {
+  // console.log(item.crops);
+  const resultProfitArray = item.crops.map((element) => {
     // console.log(element);
-    console.log("factors", element.crop.factors);
+    // console.log("factors", element.crop.factors);
     // totalYield = element.crop.yield * element.numCrops;
     // totalRevenue = totalYield * element.crop.salePrice;
     // totalCosts = element.crop.costs * element.numCrops;
@@ -114,7 +114,7 @@ const getTotalProfit = function (item) {
     const revenueCrop = revenuePlant * element.numCrops;
     const totalCosts = element.crop.costs * element.numCrops;
     const profitCrop = revenueCrop - totalCosts;
-    console.log("revPlant",revenuePlant, "revCrop", revenueCrop, "totCost",totalCosts, "profCrop", profitCrop);
+    // console.log("revPlant",revenuePlant, "revCrop", revenueCrop, "totCost",totalCosts, "profCrop", profitCrop);
     // return parseFloat(profitCrop.toFixed(2));
     return profitCrop;
   });
